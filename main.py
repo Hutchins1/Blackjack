@@ -134,11 +134,15 @@ def bet_place():
         return bet
 
 
-def score_check(dealer_1, dealer_2, player_1, player_2):
-    dealer_score = dealer_1[1] + dealer_2[1]
-    player_score = player_1[1] + player_2[1]
-    print(player_score)
+def score_check(player_cards_list, dealer_cards_list):
+    player_score = 0
+    dealer_score = 0
+    for card in range(len(player_cards_list)):
+        player_score += player_cards_list[card].score
+    for card in range(len(dealer_cards_list)):
+        dealer_score += dealer_cards_list[card].score
     print(dealer_score)
+    return dealer_score, player_score
 
 def hit_player(card_list, player_cards_list):
     index = random.randint(0, len(card_list)-1)
@@ -164,6 +168,9 @@ hit_player(card_list,player_cards_list)
 hit_player(card_list,player_cards_list)
 hit_dealer(card_list,dealer_cards_list)
 hit_dealer(card_list,dealer_cards_list)
+dealer_score, player_score = score_check(dealer_cards_list, player_cards_list)
+if dealer_score < 17:
+    hit_dealer(card_list,dealer_cards_list)
 #hit_player(card_list,player_cards_list)
 "BUTTON COMMANDS"
 
