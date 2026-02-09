@@ -15,7 +15,8 @@ root.title("Login Page")
 root.geometry("800x600+20+20")
 money_count = 500
 bet = 0
-
+player_cards_list = []
+dealer_cards_list = []
 if bet == 0:
     two_h = ["card_hearts_02.png", 2]
     two_d = ["card_diamonds_02.png", 2]
@@ -114,7 +115,7 @@ class Card():
         self.card.config(image=img)
         self.card.image = img
 
-player_cards_list = []
+
 
 "FUNCTIONS"
 
@@ -142,17 +143,27 @@ def score_check(dealer_1, dealer_2, player_1, player_2):
 def hit_player(card_list, player_cards_list):
     index = random.randint(0, len(card_list)-1)
     what_card = card_list.pop(index)
-    player_cards_list.append(Card(100, 100, what_card, card_list))
+    player_cards_list.append(Card(100, 395, what_card, card_list))
     player_cards_list[-1].create_label()
     for card in range(len(player_cards_list)):
         player_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
         player_cards_list[card].place_label()
         player_cards_list[card].card_choose(card_list)
 
+def hit_dealer(card_list, dealer_cards_list):
+    index = random.randint(0, len(card_list)-1)
+    what_card = card_list.pop(index)
+    dealer_cards_list.append(Card(100, 10,what_card, card_list))
+    dealer_cards_list[-1].create_label()
+    for card in range(len(dealer_cards_list)):
+        dealer_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
+        dealer_cards_list[card].place_label()
+        dealer_cards_list[card].card_choose(card_list)
+
 hit_player(card_list,player_cards_list)
 hit_player(card_list,player_cards_list)
-hit_player(card_list,player_cards_list)
-hit_player(card_list,player_cards_list)
+hit_dealer(card_list,dealer_cards_list)
+hit_dealer(card_list,dealer_cards_list)
 #hit_player(card_list,player_cards_list)
 "BUTTON COMMANDS"
 
