@@ -1,7 +1,13 @@
 
 import random
+from PIL import Image, ImageTk
 from tkinter import *
 import re
+import PIL.Image
+print("Pillow Image module:", PIL.Image.__file__)
+
+from PIL import Image
+print("Imported Image module:", Image.__file__)
 
 
 root = Tk()
@@ -64,6 +70,52 @@ if bet == 0:
     ace_c = ["card_clubs_A.png", 11]
     ace_s = ["card_spades_A.png", 11]
     card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
+"FRAMES"
+frame_cards = Frame(root,width = 800,height=6000, bg = "blue")    
+frame_cards.place(x=310, y=10, width = 480,height=580)
+
+frame_game = Frame(root,width = 800,height=6000, bg = "teal")
+frame_game.place(x=0, y=0, width = 800,height=6000)
+
+frame_bet = Frame(root,width = 800,height=6000, bg = "black")
+frame_bet.place(x=10, y=10, width = 290,height=580)
+
+frame_start = Frame(root,width = 800,height=6000, bg = "teal")
+frame_start.place(x=0, y=0, width = 800,height=6000)
+
+class Card():
+    def __init__(self, x, y, what_card, card_list):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.score = what_card[1]
+        self.filename = what_card[0]
+    def create_label(self):
+        self.card = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+        self.card.place(x = self.x, y = self.y, width = 125, height =175 )
+    
+    def place_label(self):
+        self.card.place(x = self.x, y = self.y, width = 125, height =175 )
+
+    def card_choose(self, card_list):
+    # Dealer cards
+        rand = random.randint(0, len(card_list)-1)
+        card_score = card_list.pop(rand)
+        self.filename = card_score[0]
+    # --- Resize helper ---
+        def load_and_resize(self): #AI
+            img = Image.open("filesse/" + self.filename)
+            img = img.resize((185, 185), Image.LANCZOS)
+            return ImageTk.PhotoImage(img)
+
+    # Load and resize images
+        img = load_and_resize(self)
+    # Display dealer cards
+        self.card.config(image=img)
+        self.card.image = img
+
+player_cards_list = []
+
 "FUNCTIONS"
 
 def bet_place():
@@ -80,43 +132,6 @@ def bet_place():
         money.config(text = money_count)
         return bet
 
-def card_choose(card_list): #AI GENERATED FUNCTION
-    # Dealer cards
-    rand = random.randint(0, len(card_list)-1)
-    dealer_1 = card_list.pop(rand)
-
-    rand = random.randint(0, len(card_list)-1)
-    dealer_2 = card_list.pop(rand)
-
-    # Player cards
-    rand = random.randint(0, len(card_list)-1)
-    player_1 = card_list.pop(rand)
-
-    rand = random.randint(0, len(card_list)-1)
-    player_2 = card_list.pop(rand)
-
-    # Load images
-    dimg1 = PhotoImage(file="images/" + dealer_1[0])
-    dimg2 = PhotoImage(file="images/" + dealer_2[0])
-
-    pimg1 = PhotoImage(file="images/" + player_1[0])
-    pimg2 = PhotoImage(file="images/" + player_2[0])
-
-    # Display dealer cards
-    dcard1.config(image=dimg1)
-    dcard1.image = dimg1
-
-    dcard2.config(image=dimg2)
-    dcard2.image = dimg2
-
-    # Display player cards
-    pcard1.config(image=pimg1)
-    pcard1.image = pimg1
-
-    pcard2.config(image=pimg2)
-    pcard2.image = pimg2
-
-    return dealer_1, dealer_2, player_1, player_2
 
 def score_check(dealer_1, dealer_2, player_1, player_2):
     dealer_score = dealer_1[1] + dealer_2[1]
@@ -124,10 +139,21 @@ def score_check(dealer_1, dealer_2, player_1, player_2):
     print(player_score)
     print(dealer_score)
 
-def hit():
-    
+def hit_player(card_list, player_cards_list):
+    index = random.randint(0, len(card_list)-1)
+    what_card = card_list.pop(index)
+    player_cards_list.append(Card(100, 100, what_card, card_list))
+    player_cards_list[-1].create_label()
+    for card in range(len(player_cards_list)):
+        player_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
+        player_cards_list[card].place_label()
+        player_cards_list[card].card_choose(card_list)
 
-
+hit_player(card_list,player_cards_list)
+hit_player(card_list,player_cards_list)
+hit_player(card_list,player_cards_list)
+hit_player(card_list,player_cards_list)
+#hit_player(card_list,player_cards_list)
 "BUTTON COMMANDS"
 
 def start_command():
@@ -135,18 +161,7 @@ def start_command():
     frame_bet.tkraise()
     frame_cards.tkraise()
 
-"FRAMES"
-frame_cards = Frame(root,width = 800,height=6000, bg = "blue")
-frame_cards.place(x=310, y=10, width = 480,height=580)
 
-frame_game = Frame(root,width = 800,height=6000, bg = "teal")
-frame_game.place(x=0, y=0, width = 800,height=6000)
-
-frame_bet = Frame(root,width = 800,height=6000, bg = "black")
-frame_bet.place(x=10, y=10, width = 290,height=580)
-
-frame_start = Frame(root,width = 800,height=6000, bg = "teal")
-frame_start.place(x=0, y=0, width = 800,height=6000)
 
 
 
@@ -191,20 +206,20 @@ money.place(x=10, y = 10, width = 200, height = 50)
 bet_amount = Label(frame_game, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
 bet_amount.place(x=50, y = 405, width = 200, height = 35)
 
-pcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
-pcard1.place(x=110, y = 580-185, width = 125, height =175 )
+# pcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+# pcard1.place(x=110, y = 580-185, width = 125, height =175 )
 
-pcard2 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
-pcard2.place(x=110+135, y = 580-185, width = 125, height =175 )
+# pcard2 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+# pcard2.place(x=110+135, y = 580-185, width = 125, height =175 )
 
-dcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
-dcard1.place(x=110, y = 10, width = 125, height =175 )
+# dcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+# dcard1.place(x=110, y = 10, width = 125, height =175 )
 
-dcard2 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
-dcard2.place(x=110+135, y = 10, width = 125, height =175 )
+# dcard2 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+# dcard2.place(x=110+135, y = 10, width = 125, height =175 )
 
 
-dealer_1, dealer_2, player_1, player_2 = card_choose(card_list)
-score_check(dealer_1, dealer_2, player_1, player_2) 
+# dealer_1, dealer_2, player_1, player_2 = card_choose(card_list)
+# score_check(dealer_1, dealer_2, player_1, player_2) 
 
 root.mainloop()
