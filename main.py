@@ -17,6 +17,7 @@ money_count = 500
 bet = 0
 player_cards_list = []
 dealer_cards_list = []
+hit_allowed = True
 if bet == 0:
     two_h = ["card_hearts_02.png", 2]
     two_d = ["card_diamonds_02.png", 2]
@@ -99,15 +100,20 @@ class Card():
     def place_label(self):
         self.card.place(x = self.x, y = self.y, width = 125, height =175 )
 
-    def card_choose(self, card_list):
+    def card_choose(self, back):
     # --- Resize helper ---
-        def load_and_resize(self): #AI
-            img = Image.open("filesse/" + self.filename)
-            img = img.resize((185, 185), Image.LANCZOS)
-            return ImageTk.PhotoImage(img)
+        def load_and_resize(self, back): #AI
+            if back == False:
+                img = Image.open("filesse/" + self.filename)
+                img = img.resize((185, 185), Image.LANCZOS)
+                return ImageTk.PhotoImage(img)
+            else:
+                img = Image.open("filesse/card_back.png")
+                img = img.resize((185, 185), Image.LANCZOS)
+                return ImageTk.PhotoImage(img)
 
     # Load and resize images
-        img = load_and_resize(self)
+        img = load_and_resize(self, back)
     # Display dealer cards
         self.card.config(image=img)
         self.card.image = img
@@ -147,7 +153,7 @@ def hit_player(card_list, player_cards_list):
     what_card = card_list.pop(index)
     player_cards_list.append(Card(100, 395, what_card, card_list))
     player_cards_list[-1].create_label()
-    player_cards_list[-1].card_choose(card_list)
+    player_cards_list[-1].card_choose(False)
     for card in range(len(player_cards_list)):
         if len(player_cards_list) == 2:
             if card == 0:
@@ -268,7 +274,12 @@ def hit_dealer(card_list, dealer_cards_list):
     what_card = card_list.pop(index)
     dealer_cards_list.append(Card(100, 10,what_card, card_list))
     dealer_cards_list[-1].create_label()
-    dealer_cards_list[-1].card_choose(card_list)
+    if len(dealer_cards_list) == 1:
+        dealer_cards_list[-1].card_choose(False)
+    elif len(dealer_cards_list) == 2:
+        dealer_cards_list[-1].card_choose(True)
+    else:
+        dealer_cards_list[-1].card_choose(False)
     for card in range(len(dealer_cards_list)):
         if len(dealer_cards_list) == 2:
             if card == 0:
@@ -280,7 +291,7 @@ def hit_dealer(card_list, dealer_cards_list):
         if len(dealer_cards_list) == 3:
             if card == 0:
                 dealer_cards_list[card].x = 42.5
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].place_label()
             if card == 1:
                 dealer_cards_list[card].x = 177.5
                 dealer_cards_list[card].place_label()
@@ -333,76 +344,121 @@ def hit_dealer(card_list, dealer_cards_list):
                 dealer_cards_list[card].x = 278
                 dealer_cards_list[card].place_label()
             elif card == 5:
-                player_cards_list[card].x = 345
-                player_cards_list[card].place_label()
-        if len(player_cards_list) == 7:
+                dealer_cards_list[card].x = 345
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 7:
             if card == 0:
-                player_cards_list[card].x = 10
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 10
+                dealer_cards_list[card].place_label()
             elif card == 1:
-                player_cards_list[card].x = 65.83
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 65.83
+                dealer_cards_list[card].place_label()
             elif card == 2:
-                player_cards_list[card].x = 121.66
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 121.66
+                dealer_cards_list[card].place_label()
             elif card == 3:
-                player_cards_list[card].x = 177.49
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 177.49
+                dealer_cards_list[card].place_label()
             elif card == 4:
-                player_cards_list[card].x = 233.32
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 233.32
+                dealer_cards_list[card].place_label()
             elif card == 5:
-                player_cards_list[card].x = 289.15
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 289.15
+                dealer_cards_list[card].place_label()
             elif card == 6:
-                player_cards_list[card].x = 345
-                player_cards_list[card].place_label()
-        if len(player_cards_list) == 8:
+                dealer_cards_list[card].x = 345
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 8:
             if card == 0:
-                player_cards_list[card].x = 10
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 10
+                dealer_cards_list[card].place_label()
             elif card == 1:
-                player_cards_list[card].x = 57.857
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 57.857
+                dealer_cards_list[card].place_label()
             elif card == 2:
-                player_cards_list[card].x = 105.714
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 105.714
+                dealer_cards_list[card].place_label()
             elif card == 3:
-                player_cards_list[card].x = 153.571
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 153.571
+                dealer_cards_list[card].place_label()
             elif card == 4:
-                player_cards_list[card].x = 201.428
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 201.428
+                dealer_cards_list[card].place_label()
             elif card == 5:
-                player_cards_list[card].x = 249.285
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 249.285
+                dealer_cards_list[card].place_label()
             elif card == 6:
-                player_cards_list[card].x = 297.142
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 297.142
+                dealer_cards_list[card].place_label()
             elif card == 7:
-                player_cards_list[card].x = 345
-                player_cards_list[card].place_label()
+                dealer_cards_list[card].x = 345
+                dealer_cards_list[card].place_label()
     
 
-def hit_player_running(card_list, player_cards_list):
+def hit_player_running(card_list, player_cards_list, hit_allowed):
+    print(hit_allowed)
+    if hit_allowed == True:
+        player_score = 0
+        hit_player(card_list, player_cards_list)
+        for card in range(len(player_cards_list)):
+            player_score += player_cards_list[card].score
+            print(player_score)
+            print(player_cards_list[card].help)
+            print(player_cards_list[card].filename)
+        if player_score > 21:
+            for card2 in range(len(player_cards_list)):
+                if player_cards_list[card2].help[1] == 11:
+                    player_cards_list[card2].help[1] = 1
+                    player_score -= 10
+                    print(player_score)
+            if player_score > 21:
+                player_bust()
+
+def player_bust():
+    print("bust")
+
+
+def stand_func(dealer_cards_list,player_cards_list):
+    global hit_allowed
+    dealer_score = 0
     player_score = 0
-    hit_player(card_list, player_cards_list)
+    hit_allowed = False
+    for card in range(len(dealer_cards_list)):
+        dealer_cards_list[card].card_choose(False)
+        dealer_score += dealer_cards_list[card].score
+        print(dealer_score)
+        print(dealer_cards_list[card].help)
+        print(dealer_cards_list[card].filename)
+    while dealer_score < 17:
+        dealer_score = 0
+        hit_dealer(card_list,dealer_cards_list)
+        for card in range(len(dealer_cards_list)):
+            dealer_cards_list[card].card_choose(False)
+            dealer_score += dealer_cards_list[card].score
+        
+        if dealer_score > 17:
+            for card2 in range(len(dealer_cards_list)):
+                if dealer_cards_list[card2].help[1] == 11:
+                    dealer_cards_list[card2].help[1] = 1
+                    dealer_score -= 10
+                    print(dealer_score)
+
     for card in range(len(player_cards_list)):
         player_score += player_cards_list[card].score
         print(player_score)
         print(player_cards_list[card].help)
         print(player_cards_list[card].filename)
+    if dealer_score > 21:
+        print("dealer_lose bust")
     if player_score > 21:
-        for card2 in range(len(player_cards_list)):
-            if player_cards_list[card2].help[1] == 11:
-                player_cards_list[card2].help[1] = 1
-                player_score -= 10
-                print(player_score)
-        if player_score > 21:
-            player_bust()
+        print("player bust")
+    elif player_score > dealer_score:
+        money += (bet*2)
+    elif player_score == dealer_score:
+        money += bet
+    
 
-def player_bust():
-    print("bust")
+
 def deal_cards(card_list,player_cards_list,dealer_cards_list):
     hit_player(card_list,player_cards_list)
     hit_player(card_list,player_cards_list)
@@ -451,10 +507,10 @@ bet_button.place(x=55, y=350,width = 180, height = 50)
 "FRAMEGAME"
 
 # Buttons
-hit = Button(frame_game, bg="white", fg="teal", text = "HIT", font = ("Times New Roman",18), command = lambda: hit_player_running(card_list,player_cards_list))
+hit = Button(frame_game, bg="white", fg="teal", text = "HIT", font = ("Times New Roman",18), command = lambda: hit_player_running(card_list,player_cards_list, hit_allowed))
 hit.place(x=10,y=450,width = 140, height = 140)
 
-stand = Button(frame_game, bg="white", fg="teal", text = "STAND", font = ("Times New Roman",18))
+stand = Button(frame_game, bg="white", fg="teal", text = "STAND", font = ("Times New Roman",18), command = lambda: stand_func(dealer_cards_list, player_cards_list))
 stand.place(x=160, y=450,width = 140, height = 140)
 
 #Labels
