@@ -420,6 +420,8 @@ def player_bust():
 
 def stand_func(dealer_cards_list,player_cards_list):
     global hit_allowed
+    global money_count
+    global bet
     dealer_score = 0
     player_score = 0
     hit_allowed = False
@@ -453,10 +455,22 @@ def stand_func(dealer_cards_list,player_cards_list):
     if player_score > 21:
         print("player bust")
     elif player_score > dealer_score:
-        money += (bet*2)
+        money_count += (bet*2)
+        money.config(text = money_count)
     elif player_score == dealer_score:
-        money += bet
-    
+        money_count += bet
+        money.config(text = money_count)
+
+def new_game():
+    global bet 
+    global card_list
+    global player_cards_list
+    global dealer_cards_list 
+    bet = 0 
+    card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
+    player_cards_list = []
+    dealer_cards_list = []
+    frame_bet.tkraise()
 
 
 def deal_cards(card_list,player_cards_list,dealer_cards_list):
@@ -512,6 +526,9 @@ hit.place(x=10,y=450,width = 140, height = 140)
 
 stand = Button(frame_game, bg="white", fg="teal", text = "STAND", font = ("Times New Roman",18), command = lambda: stand_func(dealer_cards_list, player_cards_list))
 stand.place(x=160, y=450,width = 140, height = 140)
+
+new_game_button = Button(frame_game, bg="white", fg="teal", text = "NEW GAME", font = ("Times New Roman",18), command = lambda: new_game())
+new_game_button.place(x=10,y=300,width = 140, height = 140)
 
 #Labels
 
