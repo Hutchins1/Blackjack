@@ -183,39 +183,84 @@ def hit_player(card_list, player_cards_list):
             if card == 0:
                 player_cards_list[card].x = 10
                 player_cards_list[card].place_label()
-            if card == 1:
+            elif card == 1:
                 player_cards_list[card].x = 93.75
                 player_cards_list[card].place_label()
-            if card == 2:
+            elif card == 2:
                 player_cards_list[card].x = 177.5
                 player_cards_list[card].place_label()
-            if card == 3:
+            elif card == 3:
                 player_cards_list[card].x = 261.25
                 player_cards_list[card].place_label()
-            if card == 4:
+            elif card == 4:
                 player_cards_list[card].x = 345
                 player_cards_list[card].place_label()
         if len(player_cards_list) == 6:
             if card == 0:
                 player_cards_list[card].x = 10
                 player_cards_list[card].place_label()
-            if card == 1:
+            elif card == 1:
                 player_cards_list[card].x = 77
                 player_cards_list[card].place_label()
-            if card == 2:
+            elif card == 2:
                 player_cards_list[card].x = 144
                 player_cards_list[card].place_label()
-            if card == 3:
+            elif card == 3:
                 player_cards_list[card].x = 211
                 player_cards_list[card].place_label()
-            if card == 4:
+            elif card == 4:
                 player_cards_list[card].x = 278
                 player_cards_list[card].place_label()
-            if card == 5:
+            elif card == 5:
                 player_cards_list[card].x = 345
                 player_cards_list[card].place_label()
-            # player_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
-            # player_cards_list[card].place_label()
+        if len(player_cards_list) == 7:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            elif card == 1:
+                player_cards_list[card].x = 65.83
+                player_cards_list[card].place_label()
+            elif card == 2:
+                player_cards_list[card].x = 121.66
+                player_cards_list[card].place_label()
+            elif card == 3:
+                player_cards_list[card].x = 177.49
+                player_cards_list[card].place_label()
+            elif card == 4:
+                player_cards_list[card].x = 233.32
+                player_cards_list[card].place_label()
+            elif card == 5:
+                player_cards_list[card].x = 289.15
+                player_cards_list[card].place_label()
+            elif card == 6:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 8:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            elif card == 1:
+                player_cards_list[card].x = 57.857
+                player_cards_list[card].place_label()
+            elif card == 2:
+                player_cards_list[card].x = 105.714
+                player_cards_list[card].place_label()
+            elif card == 3:
+                player_cards_list[card].x = 153.571
+                player_cards_list[card].place_label()
+            elif card == 4:
+                player_cards_list[card].x = 201.428
+                player_cards_list[card].place_label()
+            elif card == 5:
+                player_cards_list[card].x = 249.285
+                player_cards_list[card].place_label()
+            elif card == 6:
+                player_cards_list[card].x = 297.142
+                player_cards_list[card].place_label()
+            elif card == 7:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
 
 
 def hit_dealer(card_list, dealer_cards_list):
@@ -225,8 +270,118 @@ def hit_dealer(card_list, dealer_cards_list):
     dealer_cards_list[-1].create_label()
     dealer_cards_list[-1].card_choose(card_list)
     for card in range(len(dealer_cards_list)):
-        dealer_cards_list[card].x = (480/(len(dealer_cards_list)+1)) - 62.5 + (130 * card)
-        dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 2:
+            if card == 0:
+                dealer_cards_list[card].x = 110
+                dealer_cards_list[card].place_label()
+            if card == 1:
+                dealer_cards_list[card].x = 245
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 3:
+            if card == 0:
+                dealer_cards_list[card].x = 42.5
+                player_cards_list[card].place_label()
+            if card == 1:
+                dealer_cards_list[card].x = 177.5
+                dealer_cards_list[card].place_label()
+            if card == 2:
+                dealer_cards_list[card].x = 312.5
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 4:
+            if card == 0:
+                dealer_cards_list[card].x = 10
+                dealer_cards_list[card].place_label()
+            if card == 1:
+                dealer_cards_list[card].x = 121.7
+                dealer_cards_list[card].place_label()
+            if card == 2:
+                dealer_cards_list[card].x = 233.4
+                dealer_cards_list[card].place_label()
+            if card == 3:
+                dealer_cards_list[card].x = 345.1
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 5:
+            if card == 0:
+                dealer_cards_list[card].x = 10
+                dealer_cards_list[card].place_label()
+            elif card == 1:
+                dealer_cards_list[card].x = 93.75
+                dealer_cards_list[card].place_label()
+            elif card == 2:
+                dealer_cards_list[card].x = 177.5
+                dealer_cards_list[card].place_label()
+            elif card == 3:
+                dealer_cards_list[card].x = 261.25
+                dealer_cards_list[card].place_label()
+            elif card == 4:
+                dealer_cards_list[card].x = 345
+                dealer_cards_list[card].place_label()
+        if len(dealer_cards_list) == 6:
+            if card == 0:
+                dealer_cards_list[card].x = 10
+                dealer_cards_list[card].place_label()
+            elif card == 1:
+                dealer_cards_list[card].x = 77
+                dealer_cards_list[card].place_label()
+            elif card == 2:
+                dealer_cards_list[card].x = 144
+                dealer_cards_list[card].place_label()
+            elif card == 3:
+                dealer_cards_list[card].x = 211
+                dealer_cards_list[card].place_label()
+            elif card == 4:
+                dealer_cards_list[card].x = 278
+                dealer_cards_list[card].place_label()
+            elif card == 5:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 7:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            elif card == 1:
+                player_cards_list[card].x = 65.83
+                player_cards_list[card].place_label()
+            elif card == 2:
+                player_cards_list[card].x = 121.66
+                player_cards_list[card].place_label()
+            elif card == 3:
+                player_cards_list[card].x = 177.49
+                player_cards_list[card].place_label()
+            elif card == 4:
+                player_cards_list[card].x = 233.32
+                player_cards_list[card].place_label()
+            elif card == 5:
+                player_cards_list[card].x = 289.15
+                player_cards_list[card].place_label()
+            elif card == 6:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 8:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            elif card == 1:
+                player_cards_list[card].x = 57.857
+                player_cards_list[card].place_label()
+            elif card == 2:
+                player_cards_list[card].x = 105.714
+                player_cards_list[card].place_label()
+            elif card == 3:
+                player_cards_list[card].x = 153.571
+                player_cards_list[card].place_label()
+            elif card == 4:
+                player_cards_list[card].x = 201.428
+                player_cards_list[card].place_label()
+            elif card == 5:
+                player_cards_list[card].x = 249.285
+                player_cards_list[card].place_label()
+            elif card == 6:
+                player_cards_list[card].x = 297.142
+                player_cards_list[card].place_label()
+            elif card == 7:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
     
 
 def hit_player_running(card_list, player_cards_list):
