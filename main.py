@@ -91,6 +91,7 @@ class Card():
         self.y = y
         self.score = what_card[1]
         self.filename = what_card[0]
+        self.help = what_card
     def create_label(self):
         self.card = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
         self.card.place(x = self.x, y = self.y, width = 125, height =175 )
@@ -99,10 +100,6 @@ class Card():
         self.card.place(x = self.x, y = self.y, width = 125, height =175 )
 
     def card_choose(self, card_list):
-    # Dealer cards
-        rand = random.randint(0, len(card_list)-1)
-        card_score = card_list.pop(rand)
-        self.filename = card_score[0]
     # --- Resize helper ---
         def load_and_resize(self): #AI
             img = Image.open("filesse/" + self.filename)
@@ -131,46 +128,135 @@ def bet_place():
         bet_amount.config(text = f"BET: ${bet}")
         money_count -= bet
         money.config(text = money_count)
+        deal_cards(card_list,player_cards_list, dealer_cards_list)
         return bet
 
 
-def score_check(player_cards_list, dealer_cards_list):
-    player_score = 0
-    dealer_score = 0
-    for card in range(len(player_cards_list)):
-        player_score += player_cards_list[card].score
-    for card in range(len(dealer_cards_list)):
-        dealer_score += dealer_cards_list[card].score
-    print(dealer_score)
-    return dealer_score, player_score
+# def score_check(player_cards_list, dealer_cards_list):
+#     player_score = 0
+#     dealer_score = 0
+#     for card in range(len(player_cards_list)):
+#         player_score += player_cards_list[card].score
+#     for card in range(len(dealer_cards_list)):
+#         dealer_score += dealer_cards_list[card].score
+#     print(dealer_score)
+#     return dealer_score, player_score
 
 def hit_player(card_list, player_cards_list):
     index = random.randint(0, len(card_list)-1)
     what_card = card_list.pop(index)
     player_cards_list.append(Card(100, 395, what_card, card_list))
     player_cards_list[-1].create_label()
+    player_cards_list[-1].card_choose(card_list)
     for card in range(len(player_cards_list)):
-        player_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
-        player_cards_list[card].place_label()
-        player_cards_list[card].card_choose(card_list)
+        if len(player_cards_list) == 2:
+            if card == 0:
+                player_cards_list[card].x = 110
+                player_cards_list[card].place_label()
+            if card == 1:
+                player_cards_list[card].x = 245
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 3:
+            if card == 0:
+                player_cards_list[card].x = 42.5
+                player_cards_list[card].place_label()
+            if card == 1:
+                player_cards_list[card].x = 177.5
+                player_cards_list[card].place_label()
+            if card == 2:
+                player_cards_list[card].x = 312.5
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 4:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            if card == 1:
+                player_cards_list[card].x = 121.7
+                player_cards_list[card].place_label()
+            if card == 2:
+                player_cards_list[card].x = 233.4
+                player_cards_list[card].place_label()
+            if card == 3:
+                player_cards_list[card].x = 345.1
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 5:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            if card == 1:
+                player_cards_list[card].x = 93.75
+                player_cards_list[card].place_label()
+            if card == 2:
+                player_cards_list[card].x = 177.5
+                player_cards_list[card].place_label()
+            if card == 3:
+                player_cards_list[card].x = 261.25
+                player_cards_list[card].place_label()
+            if card == 4:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
+        if len(player_cards_list) == 6:
+            if card == 0:
+                player_cards_list[card].x = 10
+                player_cards_list[card].place_label()
+            if card == 1:
+                player_cards_list[card].x = 77
+                player_cards_list[card].place_label()
+            if card == 2:
+                player_cards_list[card].x = 144
+                player_cards_list[card].place_label()
+            if card == 3:
+                player_cards_list[card].x = 211
+                player_cards_list[card].place_label()
+            if card == 4:
+                player_cards_list[card].x = 278
+                player_cards_list[card].place_label()
+            if card == 5:
+                player_cards_list[card].x = 345
+                player_cards_list[card].place_label()
+            # player_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
+            # player_cards_list[card].place_label()
+
 
 def hit_dealer(card_list, dealer_cards_list):
     index = random.randint(0, len(card_list)-1)
     what_card = card_list.pop(index)
     dealer_cards_list.append(Card(100, 10,what_card, card_list))
     dealer_cards_list[-1].create_label()
+    dealer_cards_list[-1].card_choose(card_list)
     for card in range(len(dealer_cards_list)):
-        dealer_cards_list[card].x = (480/(len(player_cards_list)+1)) - 62.5 + (130 * card)
+        dealer_cards_list[card].x = (480/(len(dealer_cards_list)+1)) - 62.5 + (130 * card)
         dealer_cards_list[card].place_label()
-        dealer_cards_list[card].card_choose(card_list)
+    
 
-hit_player(card_list,player_cards_list)
-hit_player(card_list,player_cards_list)
-hit_dealer(card_list,dealer_cards_list)
-hit_dealer(card_list,dealer_cards_list)
-dealer_score, player_score = score_check(dealer_cards_list, player_cards_list)
-if dealer_score < 17:
+def hit_player_running(card_list, player_cards_list):
+    player_score = 0
+    hit_player(card_list, player_cards_list)
+    for card in range(len(player_cards_list)):
+        player_score += player_cards_list[card].score
+        print(player_score)
+        print(player_cards_list[card].help)
+        print(player_cards_list[card].filename)
+    if player_score > 21:
+        for card2 in range(len(player_cards_list)):
+            if player_cards_list[card2].help[1] == 11:
+                player_cards_list[card2].help[1] = 1
+                player_score -= 10
+                print(player_score)
+        if player_score > 21:
+            player_bust()
+
+def player_bust():
+    print("bust")
+def deal_cards(card_list,player_cards_list,dealer_cards_list):
+    hit_player(card_list,player_cards_list)
+    hit_player(card_list,player_cards_list)
     hit_dealer(card_list,dealer_cards_list)
+    hit_dealer(card_list,dealer_cards_list)
+#dealer_score, player_score = score_check(dealer_cards_list, player_cards_list)
+#print(player_score)
+#if dealer_score < 17:
+#    hit_dealer(card_list,dealer_cards_list)
 #hit_player(card_list,player_cards_list)
 "BUTTON COMMANDS"
 
@@ -210,7 +296,7 @@ bet_button.place(x=55, y=350,width = 180, height = 50)
 "FRAMEGAME"
 
 # Buttons
-hit = Button(frame_game, bg="white", fg="teal", text = "HIT", font = ("Times New Roman",18))
+hit = Button(frame_game, bg="white", fg="teal", text = "HIT", font = ("Times New Roman",18), command = lambda: hit_player_running(card_list,player_cards_list))
 hit.place(x=10,y=450,width = 140, height = 140)
 
 stand = Button(frame_game, bg="white", fg="teal", text = "STAND", font = ("Times New Roman",18))
