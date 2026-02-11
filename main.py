@@ -135,6 +135,7 @@ def bet_place():
         money_count -= bet
         money.config(text = money_count)
         deal_cards(card_list,player_cards_list, dealer_cards_list)
+        directions.config(text = "HIT or STAND")
         return bet
 
 
@@ -415,7 +416,8 @@ def hit_player_running(card_list, player_cards_list, hit_allowed):
                 player_bust()
 
 def player_bust():
-    print("bust")
+    global hit_allowed
+    hit_allowed = False
 
 
 def stand_func(dealer_cards_list,player_cards_list):
@@ -450,22 +452,32 @@ def stand_func(dealer_cards_list,player_cards_list):
         print(player_score)
         print(player_cards_list[card].help)
         print(player_cards_list[card].filename)
-    if dealer_score > 21:
-        print("dealer_lose bust")
-    if player_score > 21:
-        print("player bust")
+    if dealer_score > 21 or player_score > 21:
+        if dealer_score > 21:
+            money_count += (bet*2)
+            money.config(text = money_count)
+            directions.config(text = "DEALER BUST YOU WIN")
+        if player_score > 21:
+            directions.config(text = "PLAYER BUST YOU LOSE")
     elif player_score > dealer_score:
         money_count += (bet*2)
         money.config(text = money_count)
+        directions.config(text = "YOU WIN")
     elif player_score == dealer_score:
         money_count += bet
         money.config(text = money_count)
+        directions.config(text = "DRAW")
+    elif dealer_score > player_score:
+        directions.config(text = "DEALER WINS")
+
 
 def new_game():
     global bet 
     global card_list
     global player_cards_list
     global dealer_cards_list 
+    for card in len(range(player_cards_list)):
+        player_cards_list[card].card.destroy()
     bet = 0 
     card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
     player_cards_list = []
@@ -509,6 +521,9 @@ bet_title.place(x=10, y = 10, width = 270, height = 100)
 
 moneybet_title= Label(frame_bet, bg = "white", fg = "black", text = f"You have {money_count}$",font = ("Times New Roman",24) )
 moneybet_title.place(x=10, y = 470, width = 270, height = 100)
+
+directions= Label(frame_cards, bg = "white", fg = "black", text = "",font = ("Times New Roman",24) )
+directions.place(x=40, y = 240, width = 400, height = 100)
 
 # Entrys
 bet_entry = Entry(frame_bet, fg='grey')
