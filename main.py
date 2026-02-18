@@ -18,6 +18,8 @@ bet = 0
 player_cards_list = []
 dealer_cards_list = []
 hit_allowed = True
+high_score = 500
+stand_allowed = True
 if bet == 0:
     two_h = ["card_hearts_02.png", 2]
     two_d = ["card_diamonds_02.png", 2]
@@ -73,6 +75,9 @@ if bet == 0:
     ace_s = ["card_spades_A.png", 11]
     card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
 "FRAMES"
+frame_game_over = Frame(root,width = 800,height=6000, bg = "teal")
+frame_game_over.place(x=0, y=0, width = 800,height=6000)
+
 frame_cards = Frame(root,width = 800,height=6000, bg = "blue")    
 frame_cards.place(x=310, y=10, width = 480,height=580)
 
@@ -84,6 +89,8 @@ frame_bet.place(x=10, y=10, width = 290,height=580)
 
 frame_start = Frame(root,width = 800,height=6000, bg = "teal")
 frame_start.place(x=0, y=0, width = 800,height=6000)
+
+
 
 class Card():
     def __init__(self, x, y, what_card, card_list):
@@ -269,6 +276,16 @@ def hit_player(card_list, player_cards_list):
                 player_cards_list[card].x = 345
                 player_cards_list[card].place_label()
 
+def player_bust2(dealer_cards_list):
+    global hit_allowed
+    global money_count
+    global bet
+    global stand_allowed
+    hit_allowed = False
+    stand_allowed = False
+    for card in range(len(dealer_cards_list)):
+        dealer_cards_list[card].card_choose(False)
+
 
 def hit_dealer(card_list, dealer_cards_list):
     index = random.randint(0, len(card_list)-1)
@@ -417,41 +434,55 @@ def hit_player_running(card_list, player_cards_list, hit_allowed):
 
 def player_bust():
     global hit_allowed
+    global money_count
+    global bet
+    global dealer_cards_list
     hit_allowed = False
+    for card in range(len(dealer_cards_list)):
+        dealer_cards_list[card].card_choose(False)
+    directions.config(text = "PLAYER BUST YOU LOSE")
 
+def calculate_score(cards_list): # AI GENERATED Function claude ai
+    score = 0
+    aces = 0
+
+    for card in cards_list:
+        score += card.help[1]
+        if card.help[1] == 11 or (card.help[1] == 1 and "A" in card.filename):
+            aces += 1
+
+    # Keep converting aces from 11 to 1 as long as score is over 21
+    while score > 21 and aces > 0:
+        score -= 10
+        aces -= 1
+
+    return score
 
 def stand_func(dealer_cards_list,player_cards_list):
     global hit_allowed
     global money_count
     global bet
-    dealer_score = 0
-    player_score = 0
+    global stand_allowed
+    if stand_allowed == False:
+        return
+    dealer_score = calculate_score(dealer_cards_list)
+    player_score = calculate_score(player_cards_list)
     hit_allowed = False
     for card in range(len(dealer_cards_list)):
         dealer_cards_list[card].card_choose(False)
-        dealer_score += dealer_cards_list[card].score
-        print(dealer_score)
-        print(dealer_cards_list[card].help)
-        print(dealer_cards_list[card].filename)
     while dealer_score < 17:
-        dealer_score = 0
         hit_dealer(card_list,dealer_cards_list)
         for card in range(len(dealer_cards_list)):
             dealer_cards_list[card].card_choose(False)
-            dealer_score += dealer_cards_list[card].score
+        dealer_score = calculate_score(dealer_cards_list)
+
         
         if dealer_score > 17:
             for card2 in range(len(dealer_cards_list)):
                 if dealer_cards_list[card2].help[1] == 11:
                     dealer_cards_list[card2].help[1] = 1
                     dealer_score -= 10
-                    print(dealer_score)
 
-    for card in range(len(player_cards_list)):
-        player_score += player_cards_list[card].score
-        print(player_score)
-        print(player_cards_list[card].help)
-        print(player_cards_list[card].filename)
     if dealer_score > 21 or player_score > 21:
         if dealer_score > 21:
             money_count += (bet*2)
@@ -471,19 +502,80 @@ def stand_func(dealer_cards_list,player_cards_list):
         directions.config(text = "DEALER WINS")
 
 
-def new_game():
-    global bet 
-    global card_list
-    global player_cards_list
-    global dealer_cards_list 
-    for card in len(range(player_cards_list)):
-        player_cards_list[card].card.destroy()
-    bet = 0 
-    card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
+# def new_game():
+#     global bet 
+#     global card_list
+#     global player_cards_list
+#     global dealer_cards_list 
+#     for card in range(len(player_cards_list)):
+#         player_cards_list[card].card.destroy()
+#     bet = 0 
+#     card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
+#     player_cards_list = []
+#     dealer_cards_list = []
+#     frame_bet.tkraise()
+
+def new_game(): #AI generated function, generated by claude ai 
+    global bet, card_list, player_cards_list, dealer_cards_list, hit_allowed,  high_score
+
+    if money_count > high_score:
+        high_score = money_count
+    
+    
+    # Destroy all existing card labels
+    for card in player_cards_list:
+        card.card.destroy()
+    for card in dealer_cards_list:
+        card.card.destroy()
+
+    # Reset game state (keep money_count untouched)
+    bet = 0
+    hit_allowed = True
+
+    # Rebuild a fresh deck
+    card_list = [
+        ["card_hearts_02.png", 2], ["card_diamonds_02.png", 2],
+        ["card_clubs_02.png", 2], ["card_spades_02.png", 2],
+        ["card_hearts_03.png", 3], ["card_diamonds_03.png", 3],
+        ["card_clubs_03.png", 3], ["card_spades_03.png", 3],
+        ["card_hearts_04.png", 4], ["card_diamonds_04.png", 4],
+        ["card_clubs_04.png", 4], ["card_spades_04.png", 4],
+        ["card_hearts_05.png", 5], ["card_diamonds_05.png", 5],
+        ["card_clubs_05.png", 5], ["card_spades_05.png", 5],
+        ["card_hearts_06.png", 6], ["card_diamonds_06.png", 6],
+        ["card_clubs_06.png", 6], ["card_spades_06.png", 6],
+        ["card_hearts_07.png", 7], ["card_diamonds_07.png", 7],
+        ["card_clubs_07.png", 7], ["card_spades_07.png", 7],
+        ["card_hearts_08.png", 8], ["card_diamonds_08.png", 8],
+        ["card_clubs_08.png", 8], ["card_spades_08.png", 8],
+        ["card_hearts_09.png", 9], ["card_diamonds_09.png", 9],
+        ["card_clubs_09.png", 9], ["card_spades_09.png", 9],
+        ["card_hearts_10.png", 10], ["card_diamonds_10.png", 10],
+        ["card_clubs_10.png", 10], ["card_spades_10.png", 10],
+        ["card_hearts_J.png", 10], ["card_diamonds_J.png", 10],
+        ["card_clubs_J.png", 10], ["card_spades_J.png", 10],
+        ["card_hearts_Q.png", 10], ["card_diamonds_Q.png", 10],
+        ["card_clubs_Q.png", 10], ["card_spades_Q.png", 10],
+        ["card_hearts_K.png", 10], ["card_diamonds_K.png", 10],
+        ["card_clubs_K.png", 10], ["card_spades_K.png", 10],
+        ["card_hearts_A.png", 11], ["card_diamonds_A.png", 11],
+        ["card_clubs_A.png", 11], ["card_spades_A.png", 11],
+    ]
+
+    # Clear card lists
     player_cards_list = []
     dealer_cards_list = []
-    frame_bet.tkraise()
 
+    # Reset UI labels
+    bet_amount.config(text=f"BET: $0")
+    directions.config(text="")
+    money.config(text=money_count)
+    moneybet_title.config(text=f"You have ${money_count}")
+    bet_entry.delete(0, END)
+    # Send player back to the bet screen
+    frame_bet.tkraise()
+    if money_count <= 0:
+        frame_game_over.tkraise()
 
 def deal_cards(card_list,player_cards_list,dealer_cards_list):
     hit_player(card_list,player_cards_list)
@@ -553,6 +645,12 @@ money.place(x=10, y = 10, width = 200, height = 50)
 bet_amount = Label(frame_game, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
 bet_amount.place(x=50, y = 405, width = 200, height = 35)
 
+game_over_title= Label(frame_start, bg = "white", fg = "black", text = "BLACKJACK",font = ("Times New Roman",48) )
+game_over_title.place(x=100, y = 150, width = 600, height = 100)
+
+
+game_over_start = Button(frame_start, bg="white", fg="teal", text = "START", font = ("Times New Roman",18), command = start_command)
+game_over_start.place(x=200, y=300,width = 400, height = 100)
 # pcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
 # pcard1.place(x=110, y = 580-185, width = 125, height =175 )
 
