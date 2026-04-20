@@ -75,19 +75,19 @@ if bet == 0:
     ace_s = ["card_spades_A.png", 11]
     card_list = [two_h, two_d, two_c, two_s, three_h, three_d, three_c, three_s, four_h, four_d, four_c, four_s, five_h, five_d, five_c, five_s, six_h, six_d, six_c, six_s, seven_h, seven_d, seven_c, seven_s, eight_h, eight_d, eight_c, eight_s, nine_h, nine_d, nine_c, nine_s, ten_h, ten_d, ten_c, ten_s, jack_h, jack_d, jack_c, jack_s, queen_h, queen_d, queen_c, queen_s, king_h, king_d, king_c, king_s, ace_h, ace_d, ace_c, ace_s]
 "FRAMES"
-frame_game_over = Frame(root,width = 800,height=6000, bg = "teal")
+frame_game_over = Frame(root,width = 800,height=6000, bg = "#582f0e")
 frame_game_over.place(x=0, y=0, width = 800,height=6000)
 
-frame_cards = Frame(root,width = 800,height=6000, bg = "blue")    
+frame_cards = Frame(root,width = 800,height=6000, bg = "#283618")    
 frame_cards.place(x=310, y=10, width = 480,height=580)
 
-frame_game = Frame(root,width = 800,height=6000, bg = "teal")
+frame_game = Frame(root,width = 800,height=6000, bg = "#414833")
 frame_game.place(x=0, y=0, width = 800,height=6000)
 
-frame_bet = Frame(root,width = 800,height=6000, bg = "black")
+frame_bet = Frame(root,width = 800,height=6000, bg = "#582f0e")
 frame_bet.place(x=10, y=10, width = 290,height=580)
 
-frame_start = Frame(root,width = 800,height=6000, bg = "teal")
+frame_start = Frame(root,width = 800,height=6000, bg = "#283618")
 frame_start.place(x=0, y=0, width = 800,height=6000)
 
 
@@ -599,22 +599,22 @@ def start_command():
 
 
 "FRAME START"
-title= Label(frame_start, bg = "white", fg = "black", text = "BLACKJACK",font = ("Times New Roman",48) )
+title= Label(frame_start, bg = "#dad7cd", fg = "#000000", text = "BLACKJACK",font = ("Times New Roman",48) )
 title.place(x=100, y = 150, width = 600, height = 100)
 
 
-start = Button(frame_start, bg="white", fg="teal", text = "START", font = ("Times New Roman",18), command = start_command)
+start = Button(frame_start, bg="#dad7cd", fg="#000000", text = "START", font = ("Times New Roman",18), command = start_command)
 start.place(x=200, y=300,width = 400, height = 100)
 "FRAME BET"
 
 # Labels
-bet_title= Label(frame_bet, bg = "white", fg = "black", text = "PLACE A BET",font = ("Times New Roman",24) )
+bet_title= Label(frame_bet, bg = "#dad7cd", fg = "#000000", text = "PLACE A BET",font = ("Times New Roman",24) )
 bet_title.place(x=10, y = 10, width = 270, height = 100)
 
-moneybet_title= Label(frame_bet, bg = "white", fg = "black", text = f"You have {money_count}$",font = ("Times New Roman",24) )
+moneybet_title= Label(frame_bet, bg = "#dad7cd", fg = "#000000", text = f"You have {money_count}$",font = ("Times New Roman",24) )
 moneybet_title.place(x=10, y = 470, width = 270, height = 100)
 
-directions= Label(frame_cards, bg = "white", fg = "black", text = "",font = ("Times New Roman",24) )
+directions= Label(frame_cards, bg = "#dad7cd", fg = "#000000", text = "",font = ("Times New Roman",24) )
 directions.place(x=40, y = 240, width = 400, height = 100)
 
 # Entrys
@@ -622,34 +622,34 @@ bet_entry = Entry(frame_bet, fg='grey')
 bet_entry.place(x = 10, y = 240, width = 270, height = 100)
 
 # Buttons
-bet_button = Button(frame_bet, bg="white", fg="teal", text = "PLACE BET", font = ("Times New Roman",18), command = bet_place)
+bet_button = Button(frame_bet, bg="#dad7cd", fg="#000000", text = "PLACE BET", font = ("Times New Roman",18), command = bet_place)
 bet_button.place(x=55, y=350,width = 180, height = 50)
 
 "FRAMEGAME"
 
 # Buttons
-hit = Button(frame_game, bg="white", fg="teal", text = "HIT", font = ("Times New Roman",18), command = lambda: hit_player_running(card_list,player_cards_list, hit_allowed))
+hit = Button(frame_game, bg="#dad7cd", fg="#000000", text = "HIT", font = ("Times New Roman",18), command = lambda: hit_player_running(card_list,player_cards_list, hit_allowed))
 hit.place(x=10,y=450,width = 140, height = 140)
 
-stand = Button(frame_game, bg="white", fg="teal", text = "STAND", font = ("Times New Roman",18), command = lambda: stand_func(dealer_cards_list, player_cards_list))
+stand = Button(frame_game, bg="#dad7cd", fg="#000000", text = "STAND", font = ("Times New Roman",18), command = lambda: stand_func(dealer_cards_list, player_cards_list))
 stand.place(x=160, y=450,width = 140, height = 140)
 
-new_game_button = Button(frame_game, bg="white", fg="teal", text = "NEW GAME", font = ("Times New Roman",18), command = lambda: new_game())
+new_game_button = Button(frame_game, bg="#dad7cd", fg="#000000", text = "NEW GAME", font = ("Times New Roman",18), command = lambda: new_game())
 new_game_button.place(x=10,y=300,width = 140, height = 140)
 
 #Labels
 
-money = Label(frame_game, bg = "white", fg = "black", text = money_count ,font = ("Times New Roman",24) )
+money = Label(frame_game, bg = "#dad7cd", fg = "#000000", text = money_count ,font = ("Times New Roman",24) )
 money.place(x=10, y = 10, width = 200, height = 50)
 
-bet_amount = Label(frame_game, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
+bet_amount = Label(frame_game, bg = "#dad7cd", fg = "#000000", text = bet,font = ("Times New Roman",12) )
 bet_amount.place(x=50, y = 405, width = 200, height = 35)
 
-game_over_title= Label(frame_start, bg = "white", fg = "black", text = "BLACKJACK",font = ("Times New Roman",48) )
+game_over_title= Label(frame_start, bg = "#dad7cd", fg = "#000000", text = "BLACKJACK",font = ("Times New Roman",48) )
 game_over_title.place(x=100, y = 150, width = 600, height = 100)
 
 
-game_over_start = Button(frame_start, bg="white", fg="teal", text = "START", font = ("Times New Roman",18), command = start_command)
+game_over_start = Button(frame_start, bg="#dad7cd", fg="#000000", text = "START", font = ("Times New Roman",18), command = start_command)
 game_over_start.place(x=200, y=300,width = 400, height = 100)
 # pcard1 = Label(frame_cards, bg = "white", fg = "black", text = bet,font = ("Times New Roman",12) )
 # pcard1.place(x=110, y = 580-185, width = 125, height =175 )
